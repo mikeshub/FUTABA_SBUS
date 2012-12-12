@@ -1,20 +1,16 @@
-//#include <SerialPort.h> must be in the main program
-//port number is changed below
+
 #ifndef FUTABA_SBUS_h
 #define FUTABA_SBUS_h
 
 #include <Arduino.h>
-#include <SerialPort.h>
 
 
 #define SBUS_SIGNAL_OK          0x00
 #define SBUS_SIGNAL_LOST        0x01
 #define SBUS_SIGNAL_FAILSAFE    0x03
-#define BAUDRATE 99000
-#define RXBUFFER 64
-#define TXBUFFER 64
-#define PORTNUMBER 1
-
+#define BAUDRATE 100000
+#define port Serial1
+//#define 16CHANNEL
 
 
 class FUTABA_SBUS
@@ -26,7 +22,7 @@ class FUTABA_SBUS
 		uint8_t  failsafe_status;
 		int sbus_passthrough;
 		int toChannels;
-		void Begin(void);
+		void begin(void);
 		int16_t Channel(uint8_t ch);
 		uint8_t DigiChannel(uint8_t ch);
 		void Servo(uint8_t ch, int16_t position);
@@ -38,7 +34,6 @@ class FUTABA_SBUS
 		void UpdateChannels(void);
 		void FeedLine(void);
 	private:
-		SerialPort<PORTNUMBER,RXBUFFER,TXBUFFER> port0;
 		uint8_t byte_in_sbus;
 		uint8_t bit_in_sbus;
 		uint8_t ch;
@@ -47,7 +42,6 @@ class FUTABA_SBUS
 		uint8_t inBuffer[25];
 		int bufferIndex;
 		uint8_t inData;
-		//uint32_t baud = 99000;
 		int feedState;
 
 };
